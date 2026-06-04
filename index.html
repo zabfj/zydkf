@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="张宇 — 产品经理 / 大数据分析师个人主页" />
+  <title>张宇 | 产品经理 · 大数据分析师</title>
+
+  <!-- ==================== 全局样式 ==================== -->
+  <style>
+    /* ---------- CSS 变量：主题色与间距 ---------- */
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1c2128;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --accent: #58a6ff;
+      --accent-hover: #79b8ff;
+      --accent-glow: rgba(88, 166, 255, 0.35);
+      --section-padding: 100px 80px;
+      --max-width: 1200px;
+      --nav-height: 72px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ---------- 重置与基础排版 ---------- */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 1024px;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ---------- 通用：容器与区块标题 ---------- */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section {
+      padding: var(--section-padding);
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 48px;
+      position: relative;
+      padding-bottom: 16px;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 48px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      border-radius: 2px;
+    }
+
+    /* ---------- 滚动渐入：初始隐藏状态 ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s var(--transition), transform 0.7s var(--transition);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==================== 1. 顶部导航栏 ==================== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      z-index: 1000;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .navbar.scrolled {
+      border-bottom-color: var(--border);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+      transition: transform 0.2s ease, color var(--transition);
+    }
+
+    .nav-logo:hover {
+      color: var(--accent-hover);
+      transform: scale(1.05);
+    }
+
+    .nav-logo:active {
+      transform: scale(0.98);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+    }
+
+    .nav-links a {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      position: relative;
+      padding: 4px 0;
+      transition: color var(--transition);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .nav-links a:active {
+      transform: translateY(1px);
+    }
+
+    /* ==================== 2. 首页简介 ==================== */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-height);
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 166, 255, 0.12), transparent),
+        var(--bg-primary);
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 64px;
+    }
+
+    .hero-avatar-wrap {
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .hero-avatar {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--border);
+      background: linear-gradient(145deg, #1f6feb 0%, #0d419d 100%);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .hero-avatar.avatar-initials {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .hero-meta span::before {
+      content: "· ";
+      color: var(--border);
+      margin-right: 4px;
+    }
+
+    .hero-meta span:first-child::before {
+      content: none;
+    }
+
+    .contact-phone {
+      display: block;
+      margin-top: 16px;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      transition: color var(--transition);
+    }
+
+    .contact-phone:hover {
+      color: var(--accent);
+    }
+
+    .hero-avatar-wrap:hover .hero-avatar {
+      transform: scale(1.03);
+      border-color: var(--accent);
+      box-shadow: 0 0 40px var(--accent-glow);
+    }
+
+    .hero-avatar-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px dashed var(--border);
+      opacity: 0.5;
+      transition: opacity var(--transition), transform 0.6s ease;
+    }
+
+    .hero-avatar-wrap:hover::before {
+      opacity: 1;
+      transform: rotate(90deg);
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+    }
+
+    .hero-content .hero-role {
+      font-size: 1.35rem;
+      color: var(--accent);
+      margin-bottom: 24px;
+      font-weight: 500;
+    }
+
+    .hero-content .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin-bottom: 36px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.95rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition), transform 0.15s ease, box-shadow var(--transition);
+    }
+
+    .hero-cta:hover {
+      background: var(--accent);
+      color: var(--bg-primary);
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+
+    .hero-cta:active {
+      transform: scale(0.96);
+    }
+
+    /* ==================== 3. 技能栈区 ==================== */
+    #skills {
+      background: var(--bg-secondary);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 24px;
+      text-align: center;
+      cursor: default;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .skill-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    .skill-card:active {
+      transform: translateY(-4px) scale(0.99);
+    }
+
+    .skill-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .skill-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .skill-level {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .skill-bar {
+      margin-top: 16px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+      border-radius: 2px;
+      transition: width 1s ease 0.3s;
+    }
+
+    .skill-card.visible .skill-bar-fill {
+      width: var(--fill, 80%);
+    }
+
+    /* ==================== 4. 项目经历区 ==================== */
+    #projects {
+      background: var(--bg-primary);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(88, 166, 255, 0.5);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .project-card:active {
+      transform: translateY(-2px);
+    }
+
+    .project-thumb {
+      height: 160px;
+      background: linear-gradient(135deg, var(--bg-secondary), var(--border));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: var(--text-secondary);
+      transition: background var(--transition);
+    }
+
+    .project-card:hover .project-thumb {
+      background: linear-gradient(135deg, rgba(88, 166, 255, 0.15), var(--bg-secondary));
+    }
+
+    .project-body {
+      padding: 24px;
+    }
+
+    .project-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      transition: color var(--transition);
+    }
+
+    .project-card:hover .project-title {
+      color: var(--accent);
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .project-tag {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-secondary);
+      transition: border-color var(--transition), color var(--transition);
+    }
+
+    .project-card:hover .project-tag {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .project-link {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: var(--accent);
+      transition: gap var(--transition), transform 0.15s ease;
+    }
+
+    .project-link:hover {
+      text-decoration: underline;
+    }
+
+    .project-link:active {
+      transform: translateX(2px);
+    }
+
+    /* ==================== 5. 联系方式页脚 ==================== */
+    #contact {
+      background: var(--bg-secondary);
+      padding-bottom: 48px;
+    }
+
+    .contact-wrap {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .contact-wrap .section-title {
+      display: inline-block;
+    }
+
+    .contact-wrap .section-title::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .contact-desc {
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+    }
+
+    .contact-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.25rem;
+      padding: 16px 36px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--accent);
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .contact-email:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 28px var(--accent-glow);
+      transform: scale(1.02);
+    }
+
+    .contact-email:active {
+      transform: scale(0.98);
+    }
+
+    .contact-social {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .social-btn {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      transition: color var(--transition), border-color var(--transition), transform 0.2s ease, background var(--transition);
+    }
+
+    .social-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(88, 166, 255, 0.08);
+      transform: translateY(-4px);
+    }
+
+    .social-btn:active {
+      transform: translateY(0) scale(0.95);
+    }
+
+    .footer {
+      margin-top: 80px;
+      padding: 24px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    /* ---------- 回到顶部按钮 ---------- */
+    .back-top {
+      position: fixed;
+      right: 40px;
+      bottom: 40px;
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity var(--transition), visibility var(--transition), transform var(--transition),
+        border-color var(--transition), color var(--transition), box-shadow var(--transition);
+      z-index: 999;
+    }
+
+    .back-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-top:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .back-top:active {
+      transform: scale(0.92);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== 1. 顶部导航栏 ==================== -->
+  <header class="navbar" id="navbar">
+    <div class="container">
+      <!-- 可替换：导航 Logo 文字 -->
+      <a href="#home" class="nav-logo">张宇</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#home" data-section="home">首页</a></li>
+          <li><a href="#skills" data-section="skills">技能</a></li>
+          <li><a href="#projects" data-section="projects">项目</a></li>
+          <li><a href="#contact" data-section="contact">联系</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================== 2. 首页简介 ==================== -->
+    <section id="home" class="section">
+      <div class="container hero reveal">
+        <div class="hero-avatar-wrap">
+          <div class="hero-avatar avatar-initials" role="img" aria-label="张宇头像">张</div>
+        </div>
+        <div class="hero-content">
+          <h1>张宇</h1>
+          <p class="hero-role">产品经理 · 大数据分析师</p>
+          <p class="hero-meta">
+            <span>湖北工程学院 · 数据科学与大数据技术</span>
+            <span>2026 届本科</span>
+            <span>求职意向：产品经理 / 大数据分析师</span>
+          </p>
+          <p class="hero-desc">
+            兼具产品思维与数据分析能力，熟练掌握 Python、数据挖掘等核心技能。
+            实习期间主导需求分析与原型设计，推动产品功能优化使留存率提升 15%。
+            擅长在复杂数据中提炼关键信息，以用户为中心驱动产品迭代。
+          </p>
+          <a href="#projects" class="hero-cta">查看我的项目 →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. 技能栈区 ==================== -->
+    <section id="skills" class="section">
+      <div class="container">
+        <h2 class="section-title reveal">技能栈</h2>
+        <div class="skills-grid">
+          <article class="skill-card reveal" style="--fill: 88%;">
+            <span class="skill-icon">🐍</span>
+            <h3 class="skill-name">Python 数据分析</h3>
+            <p class="skill-level">熟练 · 爬虫 / 可视化 / 建模</p>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </article>
+          <article class="skill-card reveal" style="--fill: 85%;">
+            <span class="skill-icon">📊</span>
+            <h3 class="skill-name">数据挖掘与机器学习</h3>
+            <p class="skill-level">熟练 · XGBoost / SHAP 等</p>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </article>
+          <article class="skill-card reveal" style="--fill: 82%;">
+            <span class="skill-icon">📐</span>
+            <h3 class="skill-name">产品设计与需求管理</h3>
+            <p class="skill-level">熟练 · Jira / Axure</p>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </article>
+          <article class="skill-card reveal" style="--fill: 78%;">
+            <span class="skill-icon">💻</span>
+            <h3 class="skill-name">编程与数据基础</h3>
+            <p class="skill-level">良好 · Java / SQL / 数据结构</p>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. 项目经历区 ==================== -->
+    <section id="projects" class="section">
+      <div class="container">
+        <h2 class="section-title reveal">项目经历</h2>
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <div class="project-thumb">🦠</div>
+            <div class="project-body">
+              <h3 class="project-title">Covid-19 疫情可视化分析与建模</h3>
+              <p class="project-desc">
+                使用 Python 爬虫采集疫情数据并完成预处理，借助可视化技术绘制多类分析图表；
+                构建 SEIR 传染病动力学模型模拟传播趋势，通过 Pyecharts 绘制动态热力图与防控政策影响对比图。
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">Python</span>
+                <span class="project-tag">Pyecharts</span>
+                <span class="project-tag">SEIR 模型</span>
+              </div>
+            </div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-thumb">💳</div>
+            <div class="project-body">
+              <h3 class="project-title">个人信用评估风险建模</h3>
+              <p class="project-desc">
+                基于德国信用数据集完成特征工程与缺失值优化，采用 XGBoost + Logistic Regression
+                集成模型构建信用评分系统，输出 SHAP 值解释风险归因，探索机器学习在信贷审批中的应用。
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">XGBoost</span>
+                <span class="project-tag">SHAP</span>
+                <span class="project-tag">特征工程</span>
+              </div>
+            </div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-thumb">🏢</div>
+            <div class="project-body">
+              <h3 class="project-title">武汉（3A）公司 · 产品经理实习</h3>
+              <p class="project-desc">
+                参与产品规划设计，运用 Jira / Axure 完成需求管理与原型设计；
+                主导需求分析并推动功能优化，助力产品留存率提升 15%，覆盖项目全流程协作。
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">Jira</span>
+                <span class="project-tag">Axure</span>
+                <span class="project-tag">需求分析</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 5. 联系方式页脚 ==================== -->
+    <section id="contact" class="section">
+      <div class="container contact-wrap">
+        <h2 class="section-title reveal">联系我</h2>
+        <p class="contact-desc reveal">
+          欢迎就产品经理、大数据分析师相关岗位或项目合作与我联系，期待与您交流。
+        </p>
+        <a href="mailto:2713039704@qq.com" class="contact-email reveal">
+          ✉ 2713039704@qq.com
+        </a>
+        <a href="tel:17816775104" class="contact-phone reveal">📱 178-1677-5104</a>
+        <div class="contact-social reveal">
+          <a href="mailto:2713039704@qq.com" class="social-btn" title="发送邮件" aria-label="邮箱">邮</a>
+          <a href="tel:17816775104" class="social-btn" title="拨打电话" aria-label="电话">电</a>
+        </div>
+      </div>
+      <footer class="footer">
+        <p>© 2026 张宇 · 湖北工程学院 数据科学与大数据技术</p>
+      </footer>
+    </section>
+  </main>
+
+  <!-- 回到顶部 -->
+  <button type="button" class="back-top" id="backTop" aria-label="回到顶部">↑</button>
+
+  <!-- ==================== 原生 JavaScript ==================== -->
+  <script>
+    (function () {
+      "use strict";
+
+      /* ---------- DOM 引用 ---------- */
+      var navbar = document.getElementById("navbar");
+      var backTop = document.getElementById("backTop");
+      var navLinks = document.querySelectorAll(".nav-links a");
+      var sections = document.querySelectorAll("section[id]");
+      var revealElements = document.querySelectorAll(".reveal, .skill-card");
+
+      /* ---------- 1. 导航栏：滚动时添加阴影样式 ---------- */
+      function onScrollNavbar() {
+        if (window.scrollY > 20) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      }
+
+      /* ---------- 2. 导航高亮：根据当前可视区块激活对应链接 ---------- */
+      function setActiveNav() {
+        var scrollPos = window.scrollY + navbar.offsetHeight + 100;
+
+        sections.forEach(function (section) {
+          var top = section.offsetTop;
+          var height = section.offsetHeight;
+          var id = section.getAttribute("id");
+
+          if (scrollPos >= top && scrollPos < top + height) {
+            navLinks.forEach(function (link) {
+              link.classList.toggle("active", link.getAttribute("data-section") === id);
+            });
+          }
+        });
+      }
+
+      /* ---------- 3. 回到顶部按钮显隐 ---------- */
+      function toggleBackTop() {
+        if (window.scrollY > 400) {
+          backTop.classList.add("show");
+        } else {
+          backTop.classList.remove("show");
+        }
+      }
+
+      backTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      /* ---------- 4. 滚动渐入：Intersection Observer ---------- */
+      var revealObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: "0px 0px -80px 0px",
+          threshold: 0.12,
+        }
+      );
+
+      revealElements.forEach(function (el) {
+        revealObserver.observe(el);
+      });
+
+      /* ---------- 5. 节流：合并 scroll 监听，优化性能 ---------- */
+      var scrollTicking = false;
+
+      function onScroll() {
+        if (!scrollTicking) {
+          window.requestAnimationFrame(function () {
+            onScrollNavbar();
+            setActiveNav();
+            toggleBackTop();
+            scrollTicking = false;
+          });
+          scrollTicking = true;
+        }
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScrollNavbar();
+      setActiveNav();
+      toggleBackTop();
+
+      /* ---------- 6. 首页首屏：页面加载后延迟显示 Hero ---------- */
+      window.addEventListener("load", function () {
+        var hero = document.querySelector("#home .hero");
+        if (hero) {
+          requestAnimationFrame(function () {
+            hero.classList.add("visible");
+          });
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
